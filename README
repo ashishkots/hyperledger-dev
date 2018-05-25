@@ -1,0 +1,10 @@
+Clone the repository git clone https://ashishkots@bitbucket.org/tbchaindev/hyperledger-dev.git
+
+$ cd fabric-dms/docchain
+$ ./startFabric.sh
+$ npm install
+$ node enrollAdmin.js
+$ node registerUser.js
+
+Now start the node server using following command:
+node contract-api.js
