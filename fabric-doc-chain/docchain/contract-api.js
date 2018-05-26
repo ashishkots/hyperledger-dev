@@ -8,7 +8,7 @@ var query_contract = require("./query.js");
 var invoke = require("./invoke.js");
     
 
-		app.post('/invoke', urlencodedParser, function (req, res) {
+		app.post('/createUser', urlencodedParser, function (req, res) {
                   if (!req.body){
                     res.send({error: "no params given"});
                     console.log("error: no params given");
@@ -24,55 +24,14 @@ var invoke = require("./invoke.js");
                   
                 });
 
-        app.post('/changeAccount', urlencodedParser, function (req, res) {
-                  if (!req.body){
-                    res.send({error: "no params given"});
-                    console.log("error: no params given");
-                  } 
-                  else{
-                    console.log(req.body);
-                    unlockAccount();
 
-                    //bytes32 newUserHash, bytes32 pubKey
-                    var getData = contract.changeAccount.getData(req.body.newUserHash, req.body.pubKey);
-                    
-                    var gasNeeded = contract.changeAccount.estimateGas(req.body.newUserHash, req.body.pubKey
-                        ,{ from: walletAddress });
-
-
-                    var trxAddr = web3.eth.sendTransaction({to:contractAddress, from:walletAddress, data: getData, 
-                        gas: gasNeeded, gasPrice: "180000000000"},function(error,result){
-                            if(error){
-                                res.json({error: error});
-                            }
-                            else{
-                                res.json({result: result});
-                            }
-                        });
-                  }
-                  
-                });
-
-
-
-                app.get('/query', function(req, res){
-                    query_contract();
+                app.get('/getUser/:key', function(req, res){
+                    console.log(req.params.key);
+                    query_contract("getUser",req.params.key);
 
                 });
 
-                app.get('/balanceOf/:userAddress', function(req, res){
-
-                    contract.balanceOf(req.params.userAddress,function(error,result){
-                        if(error){
-                                res.json({error: error});
-                            }
-                            else{
-                                res.json({result: result});
-                            }
-                    });
-
-                });
-
+               
 
                 
 
@@ -87,7 +46,4 @@ var invoke = require("./invoke.js");
                   console.log("Live at Port 3600");
                 });
 
-function unlockAccount(){
-        web3.personal.unlockAccount(walletAddress,"vasainc..");
-    }
 

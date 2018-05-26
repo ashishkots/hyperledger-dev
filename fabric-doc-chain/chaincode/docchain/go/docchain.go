@@ -54,12 +54,12 @@ func (s *SmartContract) Invoke(APIstub shim.ChaincodeStubInterface) sc.Response 
                  return s.queryAllUser(APIstub)
          } else if function == "getUser" {
                  return s.getUser(APIstub, args)
-         } 
+         }
  
          return shim.Error("Invalid Smart Contract function name.")
  }
 
-func (s *SmartContract) queryUser(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
+func (s *SmartContract) getUser(APIstub shim.ChaincodeStubInterface, args []string) sc.Response {
  
          if len(args) != 1 {
                  return shim.Error("Incorrect number of arguments. Expecting 1")
